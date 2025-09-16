@@ -1,5 +1,7 @@
 <?php
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST"){
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -19,19 +21,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
             http_response_code(401);
             echo json_encode(["status" => "error", "message" => "Username does not exist"]);
             die();
-        }elseif (!is_username_wrong($result) && is_password_wrong($password, $result["password"])){
+        } elseif (!is_username_wrong($result) && is_password_wrong($password, $result["password"])){
             http_response_code(401); 
             echo json_encode(["status" => "error", "message" => "Wrong password!"]);
             die();
-        } else{
+        } else {
+            // Authentication successful
 
-            http_response_code(201); // Created
-            echo json_encode(["status" => "success", "message" => "Successful login."]);
-            error_log("login: login successfull!");
+            // Set session cookie to expire in 7 days (60 * 60 * 24 * 7 seconds)
+            $expire_time = time() + (60 * 60 * 24 * 7);
+            session_set_cookie_params($expire_time);
 
+            session_start();
+
+            $_SESSION["user_uid"] = $result["uid"];
+            $_SESSION["user_username"] = $result["username"];
+
+            http_response_code(200);
+            // Send the expiration timestamp to the app
+            echo json_encode([
+                "status" => "success",
+                "message" => "Login successful!",
+                "uid" => $result["uid"],
+                "username" => $result["username"],
+                "expires_at" => $expire_time // UNIX timestamp for expiration
+            ]);
         }
-        
-
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(["status" => "error", "message" => "Database operation failed: " . $e->getMessage()]);

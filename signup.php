@@ -1,4 +1,7 @@
 <?php
+
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $username = $_POST["username"];
@@ -8,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once 'includes/dbh.inc.php';
         require_once 'includes/signup_model.inc.php';
         require_once 'includes/signup_contr.inc.php';
-
 
         if (is_input_empty($username, $password)){
             http_response_code(400); // Bad Request
@@ -29,9 +31,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // commit database transcation
             $pdo->commit();
 
-            http_response_code(201); // Created
-            echo json_encode(["status" => "success", "message" => "Account created successfully."]);
-            error_log("signup: successfully created user!");
+            // Authentication successful
+
+            // Set session cookie to expire in 7 days (60 * 60 * 24 * 7 seconds)
+            $expire_time = time() + (60 * 60 * 24 * 7);
+            session_set_cookie_params($expire_time);
+
+            session_start();
+
+            $_SESSION["user_uid"] = $uid;
+            $_SESSION["user_username"] = $username;
+
+            http_response_code(200);
+            // Send the expiration timestamp to the app
+            echo json_encode([
+                "status" => "success",
+                "message" => "Login successful!",
+                "uid" => $uid,
+                "username" => $username,
+                "expires_at" => $expire_time // UNIX timestamp for expiration
+            ]);
+            error_log("SignUp successful for user: " . $_SESSION["user_username"]);
         }
     } catch (PDOException $e){
         $pdo->rollBack();
