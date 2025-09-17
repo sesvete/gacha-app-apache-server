@@ -18,7 +18,7 @@ function get_counter_data_form_db(object $pdo, int $uid, string $game, string $b
 function get_last_pulled_unit(object $pdo, int $uid, string $game, string $banner){
     $query = "SELECT unit_name, num_of_pulls, from_banner FROM pull
                 WHERE(user_uid = :uid AND game = :game AND banner = :banner)
-                ORDER BY pull_id DESC
+                ORDER BY date DESC, pull_id DESC
                 LIMIT 1;";
     
     $stmt = $pdo->prepare($query);
