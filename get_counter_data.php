@@ -27,17 +27,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo json_encode([
                     "progress" => $result_counter["progress"],
                     "guaranteed" => $result_counter["guaranteed"],
-                    "numOfPulls" => $result_pull["num_of_pulls"],
-                    "unitName" => $result_pull["unit_name"],
-                    "fromBanner" => $result_pull["from_banner"]
+                    "num_of_pulls" => $result_pull["num_of_pulls"],
+                    "unit_name" => $result_pull["unit_name"],
+                    "from_banner" => $result_pull["from_banner"]
                 ]);
             } else {
                 echo json_encode([
                     "progress" => $result_counter["progress"],
                     "guaranteed" => $result_counter["guaranteed"],
-                    "numOfPulls" => null,
-                    "unitName" => null,
-                    "fromBanner" => null
+                    "num_of_pulls" => null,
+                    "unit_name" => null,
+                    "from_banner" => null
                 ]);
             }
 
