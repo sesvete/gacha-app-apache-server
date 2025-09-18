@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $result = get_personal_history($pdo, $uid, $game, $banner);
         
         http_response_code(200);
-        error_log(json_encode($result));
         echo json_encode($result);
 
     } catch (PDOException $e) {
