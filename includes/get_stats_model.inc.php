@@ -16,6 +16,22 @@ function get_personal_history_for_stats(object $pdo, int $uid, string $game, str
     return $result;
 }
 
+function get_global_history_for_stats(object $pdo, string $game, string $banner){
+    $query = "SELECT user_uid, unit_name, num_of_pulls, from_banner, date FROM pull
+                WHERE(game = :game AND banner = :banner)
+                ORDER BY user_uid, date ASC, pull_id ASC;";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":game", $game);
+    $stmt->bindParam(":banner", $banner);
+
+    $stmt->execute();
+
+    // PDO::FETCH_GROUP - first column used as key - in our case group by user_uid
+    $result = $stmt->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+    return $result;
+}
+
 function get_num_of_pulls_values(array $result){
     $num_of_pulls_list = [];
     foreach($result as $pull){
