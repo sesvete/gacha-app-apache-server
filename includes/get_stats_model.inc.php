@@ -48,7 +48,7 @@ function determine_fifty_fifty_outcomes(array $from_banner_list){
             $lost5050 = false;
         } else {
             $fifty_fifty_outcomes[] = false;
-            $lost5050 = false;
+            $lost5050 = true;
         }
     }
     return $fifty_fifty_outcomes;
