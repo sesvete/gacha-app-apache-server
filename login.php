@@ -2,6 +2,11 @@
 
 header('Content-Type: application/json');
 
+require_once 'vendor/autoload.php';
+use Firebase\JWT\JWT;
+
+require_once 'includes/credentials.inc.php';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST"){
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -30,12 +35,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
 
             // Set session cookie to expire in 7 days (60 * 60 * 24 * 7 seconds)
             $expire_time = time() + (60 * 60 * 24 * 7);
-            session_set_cookie_params($expire_time);
+            
+            $payload = array(
+                "iss" => "sesvete-server.com", // Issuer of the token
+                "aud" => "gacha-app-apache", // Audience of the token
+                "iat" => time(), // Issued at time
+                "exp" => $expire_time, // Expiration time: 7 days
+                "uid" => $result["uid"] // The user's unique ID
+            );
 
-            session_start();
-
-            $_SESSION["user_uid"] = $result["uid"];
-            $_SESSION["user_username"] = $result["username"];
+            $jwt = JWT::encode($payload, $secret_key, 'HS256');
 
             http_response_code(200);
             // Send the expiration timestamp to the app
@@ -44,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
                 "message" => "Login successful!",
                 "uid" => $result["uid"],
                 "username" => $result["username"],
-                "expires_at" => $expire_time // UNIX timestamp for expiration
+                "token" => $jwt
             ]);
         }
     } catch (PDOException $e) {

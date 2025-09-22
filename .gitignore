@@ -1,2 +1,4 @@
 includes/dbh.inc.php
+includes/credentials.inc.php
 .vscode
+vendor/
