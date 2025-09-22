@@ -33,14 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
         } else {
             // Authentication successful
 
-            // Set session cookie to expire in 7 days (60 * 60 * 24 * 7 seconds)
-            $expire_time = time() + (60 * 60 * 24 * 7);
+            // Set session cookie to expire in 1 day (60 * 60 * 24 seconds)
+            $expire_time = time() + (60 * 60 * 24);
             
             $payload = array(
                 "iss" => "sesvete-server.com", // Issuer of the token
                 "aud" => "gacha-app-apache", // Audience of the token
                 "iat" => time(), // Issued at time
-                "exp" => $expire_time, // Expiration time: 7 days
+                "exp" => $expire_time, // Expiration time: 1 day
                 "uid" => $result["uid"] // The user's unique ID
             );
 
@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
                 "message" => "Login successful!",
                 "uid" => $result["uid"],
                 "username" => $result["username"],
+                "expireTime" => $expire_time,
                 "token" => $jwt
             ]);
         }
