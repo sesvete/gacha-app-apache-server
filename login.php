@@ -34,12 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST"){
             // Authentication successful
 
             // Set session cookie to expire in 1 day (60 * 60 * 24 seconds)
-            $expire_time = time() + (60 * 60 * 24);
+            $time = time();
+            $expire_time = $time + (60 * 60 * 24);
             
             $payload = array(
                 "iss" => "sesvete-server.com", // Issuer of the token
                 "aud" => "gacha-app-apache", // Audience of the token
-                "iat" => time(), // Issued at time
+                "iat" => $time, // Issued at time
                 "exp" => $expire_time, // Expiration time: 1 day
                 "uid" => $result["uid"] // The user's unique ID
             );
