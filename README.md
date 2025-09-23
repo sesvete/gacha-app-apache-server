@@ -13,4 +13,4 @@ This the backend server for the <a href="https://github.com/sesvete/gacha-tracke
     - import the sql schematic found in the sql folder
     - Create dbh.inc.php file in the folder includes and fill it with your data (use dbh_template.inc.php as template)
     - Create credentials.inc.php file in the folder includes and fill it with your data (use credentials_template.inc.php as template)
-    - run composer install (in project root directory)
+    - while positioned in the project root directory run the terminal comand: <b>composer install<b>
