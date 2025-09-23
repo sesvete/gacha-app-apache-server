@@ -1,13 +1,16 @@
-# naslov
+# Gacha Tracker Backend server
 
-ločeni login, signup, read in write datoteke
+This the backend server for the <a href="https://github.com/sesvete/gacha-tracker-apache" title="App link">Gacha Tracker App Apache</a>
 
-Needed php files:
-- login
-- sign up
-- get username from uid (for side menu)
-- get counter number and status
-- update counter number and status
-- get latest unit
-- get all units (for history and for personal stats) for single uid
-- get all units of all users
+## Server Setup
+- ### Prerequesites
+    - Apache2
+    - php
+    - MariaDb (or another SQL database)
+    - Composer
+
+- ### Setup
+    - import the sql schematic found in the sql folder
+    - Create dbh.inc.php file in the folder includes and fill it with your data (use dbh_template.inc.php as template)
+    - Create credentials.inc.php file in the folder includes and fill it with your data (use credentials_template.inc.php as template)
+    - run composer install (in project root directory)
