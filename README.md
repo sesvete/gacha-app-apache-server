@@ -1,8 +1,8 @@
 # Gacha Tracker Backend server
 
-This the backend server for the <a href="https://github.com/sesvete/gacha-tracker-apache" title="App link">Gacha Tracker App Apache</a>
+This the backend server for the <a href="https://github.com/sesvete/gacha-tracker-apache">Gacha Tracker App Apache</a>
 
-Server uses <a href="https://github.com/firebase/php-jwt" title="Github_project_link">PHP-JWT</a> library for token encoding and decoding.
+Server uses <a href="https://github.com/firebase/php-jwt">PHP-JWT</a> library for token encoding and decoding.
 
 ## Server Setup
 - ### Prerequesites
