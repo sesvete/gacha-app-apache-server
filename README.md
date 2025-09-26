@@ -7,7 +7,7 @@ Server uses <a href="https://github.com/firebase/php-jwt">PHP-JWT</a> library fo
 ## Server Setup
 - ### Prerequesites
     - Apache2
-    - php
+    - php - including php-zip, php-cli and php-mysql
     - MariaDb (or another SQL database)
     - Composer
 
